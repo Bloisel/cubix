@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 09:40:56 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/26 18:01:16 by bloisel          ###   ########.fr       */
+/*   Created: 2024/06/26 14:28:58 by bloisel           #+#    #+#             */
+/*   Updated: 2024/06/26 14:29:10 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int main(int argc, char **argv)
+void	ft_exit(t_data *dta)
 {
-	t_data dta;
-	
-	init_data(&dta);
-	if (argc == 3)
-	{
-		if (ft_strncmp(argv[2] , "--save", 10) != 0)
-			ft_printf("%s\n", "Usage : ./cub3D [map.cub] (--save)");
-		return (1);
-	}
-	if (argc > 3 || argc < 2)
-	{
-		ft_printf("%s\n", "Usage : ./cub3D [map.cub]");
-		return (1);
-	}
-	check_cub1(argv, &dta);
-	read_map(&dta, argv);
-	//print_map1(&dta);
-	return (0);
+	if (dta->error > 0)
+		exit(1);
+	exit(0);
+}
+
+void	printf_error(t_data *dta, char *str)
+{
+	ft_printf("%s\n", str);
+	dta->error = 1;
+	ft_exit(dta);
 }

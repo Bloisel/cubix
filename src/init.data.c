@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 09:40:56 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/26 18:01:16 by bloisel          ###   ########.fr       */
+/*   Created: 2024/06/26 14:15:59 by bloisel           #+#    #+#             */
+/*   Updated: 2024/06/26 17:54:34 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int main(int argc, char **argv)
+void	init_data(t_data *dta)
 {
-	t_data dta;
-	
-	init_data(&dta);
-	if (argc == 3)
-	{
-		if (ft_strncmp(argv[2] , "--save", 10) != 0)
-			ft_printf("%s\n", "Usage : ./cub3D [map.cub] (--save)");
-		return (1);
-	}
-	if (argc > 3 || argc < 2)
-	{
-		ft_printf("%s\n", "Usage : ./cub3D [map.cub]");
-		return (1);
-	}
-	check_cub1(argv, &dta);
-	read_map(&dta, argv);
-	//print_map1(&dta);
-	return (0);
+	dta->error = 0;
+    dta->nb_l = 0;
+    dta->start = 0;
+    dta->map = NULL;
+    dta->map2 = NULL;
 }
