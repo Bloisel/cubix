@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:37:26 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/26 18:38:39 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/06/27 19:43:27y bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,54 +31,72 @@ int	is_sep(char c)
 	return (0);
 }
 
-void mlcnew_map(t_data *dta, int size)
+
+void intfor_newmap(t_data *dta)
 {
-    char **str;
-    int i;
-    int res = dta->nb_l - dta->start;
-    int start = dta->start;
-    printf("res = %d\n", res);
+    int   res;
+    int start;
+    int   len;
+    int ret;
     
+    res = dta->nb_l - dta->start;
+    start = dta->start;
+    len = dta->nb_l;
+    mlc_fornewmap(dta, len, start , res);
+}
+
+
+void mlc_fornewmap(t_data *dta, int len, int start, int res)
+{
+    int i;
 
     i = 0;
-    str = malloc((sizeof(char *)) * (res  + 1));
-    while(i < res)
-    {
-        str[start] = malloc(sizeof(char) * (size + 1));
-        start++;
-        i++;
-    }
+    dta->new_m = (char **)malloc((res + 1) * sizeof(char *));
+    if (!dta->new_m) 
+        printf_error(dta, "Error : memory allocation failed1\n");
+    while (i++ < res)
+        dta->new_m[i] = (char *)malloc((dta->size + 1) * sizeof(char));
+    if (!dta->new_m[i]) 
+        printf_error(dta, "Error : memory allocation failed2\n");
+    mlcnew_map(dta, len, start, res);
+}
+
+
+void mlcnew_map(t_data *dta, int len , int start, int res)
+{
+    int i;
+    int j;
+    int k;
+   
+    j = 0;
+    k = 0;
     i = 0;
-    start = dta->start;
-    while(i < res)
-    {
-        str[start] = ft_strdup(dta->map2[start]);
-        printf("str la new map %s\n", str[start]);
-        i++;
-        start++;
-    }
-    i = 0;
-    int j = 0;
-    start = dta->start;
-    while(i < res)
+    while (i < res)
     {
         j = 0;
-        while (str[start][j])
+        k = 0;
+        while (dta->map2[start][j]) 
         {
-            if (is_sep(str[start][j]) == 1)
-                str[start][j] = 1;
+            if (is_sep(dta->map2[start][j]) == 1)
+                dta->new_m[i][k++] = '1';
+            else
+                dta->new_m[i][k++] = dta->map2[start][j];
             j++;
         }
+        while (k < dta->size) 
+            dta->new_m[i][k++] = '1';
+        dta->new_m[i][k] = '\0';
         start++;
         i++;
     }
-    printf("_______________________________________________________\n");
     i = 0;
-    start = dta->start;
-    while(i < res)
+    while (i < res)
     {
-        printf("str la new map %s\n", str[start]);
+        printf("old ligne = %s\n", dta->map2[dta->start + i]);
+        printf("new ligne = %s\n", dta->new_m[i]);
+        printf("_______________________________________________________\n");
         i++;
-        start++;
     }
+    i = 0;
+    free(dta->new_m);
 }

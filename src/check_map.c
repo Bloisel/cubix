@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:01:31 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/26 18:25:39 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/06/27 21:22:55 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void    size_mapline(t_data *dta)
         }
         i++;
     }
-    mlcnew_map(dta, k);
+	dta->size = k;
+    //mlcnew_map(dta, k);
+	intfor_newmap(dta);
 }
 
 
