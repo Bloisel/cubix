@@ -26,77 +26,42 @@ void print_map1(t_data *dta)
 
 int	is_sep(char c)
 {
-	if (c == '\n' || c == ' ' || c == '\t')
+	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
 }
 
-
-void intfor_newmap(t_data *dta)
+void is_sepnoline(char c)
 {
-    int   res;
-    int start;
-    int   len;
-    int ret;
-    
-    res = dta->nb_l - dta->start;
-    start = dta->start;
-    len = dta->nb_l;
-    mlc_fornewmap(dta, len, start , res);
+    if (c == '\n' || c == '\0')
+		return (1);
+	return (0);
 }
 
-
-void mlc_fornewmap(t_data *dta, int len, int start, int res)
+int is_valid_char(char c) 
 {
-    int i;
-
-    i = 0;
-    dta->new_m = (char **)malloc((res + 1) * sizeof(char *));
-    if (!dta->new_m) 
-        printf_error(dta, "Error : memory allocation failed1\n");
-    while (i++ < res)
-        dta->new_m[i] = (char *)malloc((dta->size + 1) * sizeof(char));
-    if (!dta->new_m[i]) 
-        printf_error(dta, "Error : memory allocation failed2\n");
-    mlcnew_map(dta, len, start, res);
+    return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-
-void mlcnew_map(t_data *dta, int len , int start, int res)
+char	*ft_jointventure(char const *s1, char const *s2)
 {
-    int i;
-    int j;
-    int k;
-   
-    j = 0;
-    k = 0;
-    i = 0;
-    while (i < res)
+	size_t	i;
+	size_t	j;
+	char	*dup;
+
+	dup = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!dup)
+		return (NULL);
+	i = -1;
+	j = -1;
+	if (*s1 != '\0')
     {
-        j = 0;
-        k = 0;
-        while (dta->map2[start][j]) 
-        {
-            if (is_sep(dta->map2[start][j]) == 1)
-                dta->new_m[i][k++] = '1';
-            else
-                dta->new_m[i][k++] = dta->map2[start][j];
-            j++;
-        }
-        while (k < dta->size) 
-            dta->new_m[i][k++] = '1';
-        dta->new_m[i][k] = '\0';
-        start++;
-        i++;
+        while (s1[++i])
+		    dup[i] = s1[i];
+        i--;
     }
-    i = 0;
-    while (i < res)
-    {
-        printf("old ligne = %s\n", dta->map2[dta->start + i]);
-        printf("new ligne = %s\n", dta->new_m[i]);
-        printf("_______________________________________________________\n");
-        i++;
-    }
-    i = 0;
-    free(dta->new_m);
+	while (s2[++j])
+		dup[++i] = s2[j];
+	dup[i + 1] = '\0';
+	return (dup);
 }

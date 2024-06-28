@@ -35,6 +35,9 @@ SRC = src/main.c \
 	  src/ft_exit.c \
 	  src/check_map.c \
 	  src/utils.c \
+	  src/new_map.c \
+	  src/pars_map.c \
+	  src/check_maperror.c \
 	  src/check.cub.c 
       # Ajoutez tous vos autres fichiers source ici
 

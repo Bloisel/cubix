@@ -6,12 +6,11 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:01:31 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/27 21:22:55 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/06/28 05:51:50 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 void mall_map(t_data *dta)
 {
@@ -23,8 +22,6 @@ void mall_map(t_data *dta)
     while(dta->map[i][j] != '1')
         i++;
 }
-
-
 
 void    size_mapline(t_data *dta)
 {
@@ -47,7 +44,6 @@ void    size_mapline(t_data *dta)
     //mlcnew_map(dta, k);
 	intfor_newmap(dta);
 }
-
 
 void    make_wall(t_data *dta)
 {
@@ -86,6 +82,8 @@ void	read_map2(t_data *dta, int read_one, char *str, int fd)
 		free(str);
 		printf_error(dta, "Error : le fichier n'a pas pu etre lu correctement");
 	}
+	close(fd);
+	dta->buff = ft_strdup(str);
 	dta->map = ft_split(str, '\n');
 	dta->map2 = ft_split(str, '\n');
 	free(str);

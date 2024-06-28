@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:01:33 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/27 21:26:09 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/06/28 06:22:26 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 
 typedef struct s_data
 {
+	char 	**cm;
+	char 	*buff;
 	char 	**new_m;
 	char	**map;
 	char	**map2;
@@ -64,9 +66,22 @@ void    size_mapline(t_data *dta);
 //utils
 void print_map1(t_data *dta);
 int	is_sep(char c);
+void is_sepnoline(char c);
+int is_valid_char(char c); 
+char	*ft_jointventure(char const *s1, char const *s2);
+
+//new_map
 void mlc_fornewmap(t_data *dta, int len, int start, int res);
 void mlcnew_map(t_data *dta, int len , int start, int res);
 void intfor_newmap(t_data *dta);
 
+//pars_map
+void	check_map_walls(t_data *dta);
+
+//check_maperror
+int	search_line(t_data *dta, int argc, char **argv);
+char *check_noline(t_data *dta, int fd);
+int check_nol(char *str);
+int checkstr(char *str);
 
 #endif

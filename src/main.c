@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 09:40:56 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/26 18:01:16 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/06/28 05:52:01 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int main(int argc, char **argv)
 	}
 	check_cub1(argv, &dta);
 	read_map(&dta, argv);
+	check_map_walls(&dta);
+	search_line(&dta, argc , argv);
 	//print_map1(&dta);
 	return (0);
 }
