@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 00:01:42 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/28 04:05:37 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/04 04:33:29 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,30 @@
 
 void intfor_newmap(t_data *dta)
 {
-    int   res;
-    int start;
-    int   len;
-    int ret;
+    int     res;
+    int     start;
     
     res = dta->nb_l - dta->start;
     start = dta->start;
-    len = dta->nb_l;
-    mlc_fornewmap(dta, len, start , res);
+    mlc_fornewmap(dta, start , res);
 }
 
-
-void mlc_fornewmap(t_data *dta, int len, int start, int res)
+void mlc_fornewmap(t_data *dta, int start, int res)
 {
     int i;
 
     i = 0;
-    dta->new_m = (char **)malloc((res + 1) * sizeof(char *));
+    dta->new_m = (char **)malloc((res) * sizeof(char *));
     if (!dta->new_m) 
         printf_error(dta, "Error : memory allocation failed1\n");
     while (i++ < res)
         dta->new_m[i] = (char *)malloc((dta->size + 1) * sizeof(char));
     if (!dta->new_m[i]) 
         printf_error(dta, "Error : memory allocation failed2\n");
-    mlcnew_map(dta, len, start, res);
+    mlcnew_map(dta, start, res);
 }
 
-void print_new_mp(t_data *dta, int res)
-{
-    int i = 0;
-    while (i < res)
-    {
-        // printf("old ligne = %s\n", dta->map2[dta->start + i]);
-        printf("new ligne = %s\n", dta->new_m[i]);
-        printf("_______________________________________________________\n");
-        i++;
-    }
-}
-
-void mlcnew_map(t_data *dta, int len , int start, int res)
+void mlcnew_map(t_data *dta, int start, int res)
 {
     int i;
     int j;
@@ -82,5 +66,4 @@ void mlcnew_map(t_data *dta, int len , int start, int res)
     }
     dta->new_m[i] = '\0';
     //print_new_mp(dta, res);
-    //free(dta->new_m);
 }

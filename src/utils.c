@@ -12,18 +12,6 @@
 
 #include "../include/cub3d.h"
 
-void print_map1(t_data *dta)
-{
-    int i;
-
-    i = 0;
-    while (dta->map[i])
-    {
-        printf("%s\n",dta->map[i]);
-        i++; 
-    }
-}
-
 int	is_sep(char c)
 {
 	if (c == ' ' || c == '\t')
@@ -31,7 +19,7 @@ int	is_sep(char c)
 	return (0);
 }
 
-void is_sepnoline(char c)
+int is_sepnoline(char c)
 {
     if (c == '\n' || c == '\0')
 		return (1);
@@ -41,6 +29,17 @@ void is_sepnoline(char c)
 int is_valid_char(char c) 
 {
     return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+void print_new_mp(t_data *dta, int res)
+{
+    int i = 0;
+    while (i < res)
+    {
+        printf("new ligne = %s\n", dta->new_m[i]);
+        printf("_______________________________________________________\n");
+        i++;
+    }
 }
 
 char	*ft_jointventure(char const *s1, char const *s2)

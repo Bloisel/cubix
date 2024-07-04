@@ -13,69 +13,69 @@
 NAME = cub3d
 
 CC = gcc
-CFLAGS = -Wall -Wextra 
-DEBUG = -g -O0
+CFLAGS = -Wall -Wextra -Werror -g -O0
 
-MLX42_PATH = ./MLX42
-PTF_PATH = ./ft_printf
-LIB_PATH = ./libft
+MLX_DIR = ./MLX42
+MLX_LIB = $(MLX_DIR)/build/libmlx42.a
+MLX_INC = $(MLX_DIR)/include
 
-PTF_LIB = $(PTF_PATH)/libftprintf.a
-LIBFT_LIB = $(LIB_PATH)/libft.a
-MLX42_LIB = $(MLX42_PATH)/build/libmlx42.a
+SRC_DIR = src
+OBJ_DIR = obj
+LIBFT_DIR = ./libft
+PRINTF_DIR = ./ft_printf
+MINILIBX_DIR = ./minilibx-linux
 
-MLX42_INC = -I$(MLX42_PATH)/include
-LIB_INC = -I$(LIB_PATH)
-PTF_INC = -I$(PTF_PATH)
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+DEP = $(OBJ:.o=.d)
 
-LD42FLAGS := $(MLX42_LIB) -ldl -lglfw -pthread -lm
+LIBFT = $(LIBFT_DIR)/libft.a
+PRINTF = $(PRINTF_DIR)/libftprintf.a
+MINILIBX = $(MINILIBX_DIR)/libmlx.a
 
-SRC = src/main.c \
-	  src/init.data.c \
-	  src/ft_exit.c \
-	  src/check_map.c \
-	  src/utils.c \
-	  src/new_map.c \
-	  src/pars_map.c \
-	  src/check_maperror.c \
-	  src/check.cub.c 
-      # Ajoutez tous vos autres fichiers source ici
-
-OBJ = $(SRC:.c=.o)
-DEP = $(SRC:.c=.d)
-
--include $(DEP)
+# Ajout du flag -s pour rendre make plus silencieux
+MAKEFLAGS += --silent
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(MLX42_LIB) $(PTF_LIB) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) $(DEBUG) -o $@ $(OBJ) $(LD42FLAGS) $(LIBFT_LIB) $(PTF_LIB)
-	@echo "$(NAME) built successfully."
+$(NAME): $(LIBFT) $(PRINTF) $(MINILIBX) $(MLX_LIB) $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $(OBJ) $(MLX_LIB) -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -L$(MINILIBX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lbsd
 
-$(MLX42_LIB):
-	@cmake -B $(MLX42_PATH)/build -S $(MLX42_PATH) && $(MAKE) -C $(MLX42_PATH)/build -j4
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(PRINTF_DIR) -I$(MLX_INC) -I$(MINILIBX_DIR) -MMD -MP -c $< -o $@
 
-$(PTF_LIB):
-	$(MAKE) -C $(PTF_PATH)
+$(LIBFT):
+	make -s -C $(LIBFT_DIR)
 
-$(LIBFT_LIB):
-	$(MAKE) -C $(LIB_PATH)
+$(PRINTF):
+	make -s -C $(PRINTF_DIR)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(MLX42_INC) $(LIB_INC) $(PTF_INC) -MMD -MP -c $< -o $@
+$(MINILIBX):
+	make -s -C $(MINILIBX_DIR)
+
+$(MLX_LIB):
+	cmake -B $(MLX_DIR)/build $(MLX_DIR) > /dev/null
+	make -s -C $(MLX_DIR)/build
 
 clean:
 	rm -f $(OBJ) $(DEP)
-	$(MAKE) -C $(PTF_PATH) clean
-	$(MAKE) -C $(LIB_PATH) clean
-	@if [ -f $(MLX42_PATH)/build/Makefile ]; then $(MAKE) -C $(MLX42_PATH)/build clean; fi
+	rm -rf $(OBJ_DIR)
+	rm -f $(SRC_DIR)/*.o $(SRC_DIR)/*.d
+	make -s -C $(LIBFT_DIR) clean
+	make -s -C $(PRINTF_DIR) clean
+	make -s -C $(MINILIBX_DIR) clean
+	rm -rf $(MLX_DIR)/build
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(PTF_PATH) fclean
-	$(MAKE) -C $(LIB_PATH) fclean
-	rm -rf $(MLX42_PATH)/build
+	make -s -C $(LIBFT_DIR) fclean
+	make -s -C $(PRINTF_DIR) fclean
+	make -s -C $(MINILIBX_DIR) clean
+	rm -f $(MLX_LIB)
 
 re: fclean all
 
-.PHONY: all clean fclean re $(PTF_LIB) $(LIBFT_LIB) $(MLX42_LIB)
+-include $(DEP)
+
+.PHONY: all clean fclean re $(LIBFT) $(PRINTF) $(MINILIBX) $(MLX_LIB)

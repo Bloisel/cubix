@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_maperror.c                                   :+:      :+:    :+:   */
+/*   check_emptyline.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 00:47:54 by bloisel           #+#    #+#             */
-/*   Updated: 2024/06/28 06:25:32 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/03 23:18:45 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,7 @@ int check_nol(char *str)
         while (str[i] == ' ' && str[i])
             i++;
         if (str[i] == '\n')
-        {
-            printf("oh muchacho la y a une ligne vide dans la map va lire la consigne animal");
-            printf("le numero %d\n", i);
-            printf("la ligne %s\n", str);
             return (-1);
-        }
         i++;
     }
     return (0);
@@ -43,16 +38,9 @@ int checkstr(char *str)
         while (str[i] == ' ' && str[i])
             i++;
         if (str[i] != '1')
-        {
-            printf("not the good line\n");
             return (1);
-        }
         else
-        {
-            printf("first line of the map\n");
-            printf("%s\n", str);
             return (0);
-        }
         i++;
     } 
     return (1);
@@ -60,14 +48,15 @@ int checkstr(char *str)
 
 char *check_noline(t_data *dta, int fd)
 {
-    int i = ft_strlen(dta->buff);
-    char *buffer;
+    int          i;
+    int      index;
+    int      bytes;
+    char character;
+
+    i = ft_strlen(dta->buff);
+    index = 0;
     if ((fd < 0) || (i <= 0))
 		return (NULL);
-	buffer = (char *)malloc(sizeof(char) * (i + 1));
-    int		index = 0;
-    int		bytes;
-    char	character;
     while ((bytes = read(fd, &character, 1)) > 0)
     {
 	    dta->buff[index++] = character;
@@ -96,19 +85,19 @@ int	search_line(t_data *dta, int argc, char **argv)
 		string = check_noline(dta, fd);
         while (string != NULL)
 		{
-			printf("Line %d - %s ", line, string);
 			string = check_noline(dta, fd);
             if (string)
             {
                 if (checkstr(string) == 0)
                     fisrt_map = 1;
                 if (fisrt_map == 1)
-                    check_nol(string);
+                {
+                    if (check_nol(string) == -1)
+                        printf_error(dta,"Error : empty line in map animal");
+                }
             }
 			line++;
 		}
-		if (!string)
-			printf("Line %d - (null) EOF", line);
 		close(fd);
 	}
 	return (0);
