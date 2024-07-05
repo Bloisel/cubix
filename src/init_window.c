@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.data.c                                        :+:      :+:    :+:   */
+/*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 14:15:59 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/05 04:37:30 by bloisel          ###   ########.fr       */
+/*   Created: 2024/07/05 04:36:21 by bloisel           #+#    #+#             */
+/*   Updated: 2024/07/05 04:42:04 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	init_data(t_data *dta)
+void	init_window(t_data *dta)
 {
-	dta->error = 0;
-	dta->nb_l = 0;
-	dta->start = 0;
-	dta->map = NULL;
-	dta->new_m = NULL;
-	dta->size = 0;
-	dta->res = 0;
-	dta->player = 0;
-	dta->longeur = 0;
-	dta->largeur = 0;
-	dta->map2 = NULL;
-	dta->buff = ft_calloc(10000, sizeof(char));
-	dta->cm = NULL;
+	//t_data	img;
+
+	dta->mlx = mlx_init();
+	dta->mlx_win = mlx_new_window(dta->mlx, dta->longeur * 32,
+			dta->largeur * 32, "HELLO_WORLD");
 }

@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:01:33 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/05 04:31:01 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/05 04:39:51 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,21 @@
 # include <sys/stat.h>
 # include "../minilibx-linux/mlx.h"
 //# include "../MLX42/include/MLX42/MLX42.h"
-
+# include "mlx.h"
 
 #define INTMAX 2147483647
-#define WIDTH 256
-#define HEIGHT 256
+//#define WIDTH 256
+//#define HEIGHT 256
+
+
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
+
 
 typedef struct s_data
 {
@@ -47,6 +57,13 @@ typedef struct s_data
 	int		error;
 	int 	start;
 	int		player;
+
+	int		longeur;
+	int		largeur;
+	void	*mlx;
+	void	*mlx_win;
+	int		img_width;
+	int		img_height;
 }	t_data;
 
 
@@ -107,5 +124,10 @@ void annex_utils2(t_data *dta, char *str);
 void annex_utils(t_data *dta, char *str);
 void check_f(t_data *dta);
 void check_c(t_data *dta);
+
+
+//init window try avec minilibx pas tres opti MLX42 sonne mieux mais fuck la bibli GLFW
+void	init_window(t_data *dta);
+
 
 #endif

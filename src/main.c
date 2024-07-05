@@ -6,13 +6,11 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 09:40:56 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/05 04:30:53 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/05 04:42:37 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-
 
 int main(int argc, char **argv)
 {
