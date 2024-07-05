@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:01:33 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/04 04:36:32 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/05 04:31:01 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
 # include <math.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-#include "MLX42/MLX42.h"
+# include "../minilibx-linux/mlx.h"
+//# include "../MLX42/include/MLX42/MLX42.h"
+
 
 #define INTMAX 2147483647
 #define WIDTH 256
@@ -70,14 +72,16 @@ char	*ft_jointventure(char const *s1, char const *s2);
 
 //new_map
 void mlc_fornewmap(t_data *dta, int start, int res);
-void mlcnew_map(t_data *dta, int start, int res);
+void mlcnew_map(t_data *dta, int start, int res, int i);
 void intfor_newmap(t_data *dta);
 
 //pars_wall
-void	check_map_walls(t_data *dta);
+void	int_forcheckwalls(t_data *dta);
+void	check_map_walls(t_data *dta, int x, int j, int i);
 
 //check_emptyline
-int		search_line(t_data *dta, int argc, char **argv);
+void	int_for_sline(t_data *dta, char **argv);
+int		search_line(t_data *dta, char **argv, int fd, int fisrt_map);
 char 	*check_noline(t_data *dta, int fd);
 int 	check_nol(char *str);
 int 	checkstr(char *str);
@@ -95,7 +99,7 @@ void check_argmap(t_data *dta);
 void check_player(t_data *dta);
 
 // check elements avant map
-void check_everything(t_data *dta, int no, int so, int we, int ea);
+void check_everything(t_data *dta, int i, int f);
 void int_for_elem(t_data *dta);
 
 // annexe elements pour C 245,0,100 et F 

@@ -10,72 +10,70 @@
 #                                                                              #
 # **************************************************************************** #
 
+# Nom de l'exécutable
 NAME = cub3d
 
+# Compilateur et options
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -O0
 
-MLX_DIR = ./MLX42
-MLX_LIB = $(MLX_DIR)/build/libmlx42.a
-MLX_INC = $(MLX_DIR)/include
-
+# Répertoires
 SRC_DIR = src
 OBJ_DIR = obj
+MINI_LX = ./minilibx-linux
 LIBFT_DIR = ./libft
 PRINTF_DIR = ./ft_printf
-MINILIBX_DIR = ./minilibx-linux
 
+# Sources et objets
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-DEP = $(OBJ:.o=.d)
 
+# Bibliothèques
+MINI_LX_LIB = $(MINI_LX)/libmlx.a
 LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF = $(PRINTF_DIR)/libftprintf.a
-MINILIBX = $(MINILIBX_DIR)/libmlx.a
 
-# Ajout du flag -s pour rendre make plus silencieux
-MAKEFLAGS += --silent
+# Flags pour MiniLibX
+MLXFLAGS = -L$(MINI_LX) -lmlx -lm -lX11 -lXext -L/usr/lib
 
+# Cible par défaut
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(PRINTF) $(MINILIBX) $(MLX_LIB) $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ) $(MLX_LIB) -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -L$(MINILIBX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lbsd
+# Compilation de l'exécutable
+$(NAME): $(OBJ) $(LIBFT) $(PRINTF) $(MINI_LX_LIB)
+	$(CC) $(CFLAGS) -o $@ $(OBJ) -L$(MINI_LX) -lmlx -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -lm -lX11 -lXext
 
+# Compilation des objets
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(PRINTF_DIR) -I$(MLX_INC) -I$(MINILIBX_DIR) -MMD -MP -c $< -o $@
+	$(CC) $(CFLAGS) -I$(MINI_LX) -I$(LIBFT_DIR) -I$(PRINTF_DIR) -MMD -MP -c $< -o $@
 
+# Bibliothèques
 $(LIBFT):
-	make -s -C $(LIBFT_DIR)
+	make -C $(LIBFT_DIR)
 
 $(PRINTF):
-	make -s -C $(PRINTF_DIR)
+	make -C $(PRINTF_DIR)
 
-$(MINILIBX):
-	make -s -C $(MINILIBX_DIR)
+$(MINI_LX_LIB):
+	make -C $(MINI_LX)
 
-$(MLX_LIB):
-	cmake -B $(MLX_DIR)/build $(MLX_DIR) > /dev/null
-	make -s -C $(MLX_DIR)/build
-
+# Nettoyage
 clean:
-	rm -f $(OBJ) $(DEP)
+	rm -f $(OBJ)
 	rm -rf $(OBJ_DIR)
-	rm -f $(SRC_DIR)/*.o $(SRC_DIR)/*.d
-	make -s -C $(LIBFT_DIR) clean
-	make -s -C $(PRINTF_DIR) clean
-	make -s -C $(MINILIBX_DIR) clean
-	rm -rf $(MLX_DIR)/build
+	make -C $(LIBFT_DIR) clean
+	make -C $(PRINTF_DIR) clean
+	make -C $(MINI_LX) clean
 
 fclean: clean
 	rm -f $(NAME)
-	make -s -C $(LIBFT_DIR) fclean
-	make -s -C $(PRINTF_DIR) fclean
-	make -s -C $(MINILIBX_DIR) clean
-	rm -f $(MLX_LIB)
+	make -C $(LIBFT_DIR) fclean
+	make -C $(PRINTF_DIR) fclean
+	make -C $(MINI_LX) clean
 
 re: fclean all
 
--include $(DEP)
+-include $(OBJ:.o=.d)
 
-.PHONY: all clean fclean re $(LIBFT) $(PRINTF) $(MINILIBX) $(MLX_LIB)
+.PHONY: all clean fclean re
