@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 00:01:42 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/04 23:34:33 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/05 08:00:32 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,14 @@ void	mlc_fornewmap(t_data *dta, int start, int res)
 	dta->new_m = (char **)malloc((res) * sizeof(char *));
 	if (!dta->new_m)
 		printf_error(dta, "Error : memory allocation failed1\n");
-	while (i++ < res)
-		dta->new_m[i] = (char *)malloc((dta->size + 1) * sizeof(char));
-	if (!dta->new_m[i])
-		printf_error(dta, "Error : memory allocation failed2\n");
+	while (i < res)
+	{
+			dta->new_m[i] = (char *)malloc((dta->size + 1) * sizeof(char));
+			if (!dta->new_m[i])
+					printf_error(dta, "Error : memory allocation failed2\n");
+			i++;
+	}
+	//dta->new_m[res] = NULL;
 	i = 0;
 	mlcnew_map(dta, start, res, i);
 }

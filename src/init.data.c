@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:15:59 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/05 04:37:30 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/09 13:23:15 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ void	init_data(t_data *dta)
 	dta->new_m = NULL;
 	dta->size = 0;
 	dta->res = 0;
+	
+	dta->img_height = 32;
+	dta->img_width = 32;
 	dta->player = 0;
-	dta->longeur = 0;
-	dta->largeur = 0;
+	dta->longeur = 5;
+	dta->largeur = 5;
+	
 	dta->map2 = NULL;
 	dta->buff = ft_calloc(10000, sizeof(char));
 	dta->cm = NULL;

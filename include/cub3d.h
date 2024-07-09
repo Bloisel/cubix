@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:01:33 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/05 04:39:51 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/09 14:19:00 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include "../minilibx-linux/mlx.h"
+# include "mlx.h"
 //# include "../MLX42/include/MLX42/MLX42.h"
 # include "mlx.h"
 

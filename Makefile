@@ -14,8 +14,10 @@
 NAME = cub3d
 
 # Compilateur et options
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -O0
+CC = gcc 
+CFLAGS = -g -O0
+
+# patrick CFLAGS = -Wall -Wextra -Werror -Lmlx_linux -lmlx_Linux -I/usr/local/include -L/usr/local/lib -Imlx_linux -Imlx -lX11 -lXext -lm
 
 # Répertoires
 SRC_DIR = src
@@ -27,6 +29,14 @@ PRINTF_DIR = ./ft_printf
 # Sources et objets
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Linux)
+    MLXFLAGS = -L$(MINI_LX) -lmlx -lm -lX11 -lXext
+else ifeq ($(UNAME_S),Darwin)
+    MLXFLAGS = -L$(MINI_LX) -lmlx -framework OpenGL -framework AppKit
+endif
 
 # Bibliothèques
 MINI_LX_LIB = $(MINI_LX)/libmlx.a
@@ -41,7 +51,7 @@ all: $(NAME)
 
 # Compilation de l'exécutable
 $(NAME): $(OBJ) $(LIBFT) $(PRINTF) $(MINI_LX_LIB)
-	$(CC) $(CFLAGS) -o $@ $(OBJ) -L$(MINI_LX) -lmlx -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -lm -lX11 -lXext
+	$(CC) $(CFLAGS) -o $@ $(OBJ) -L$(MINI_LX) -lmlx -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -lm -lX11 -lXext 
 
 # Compilation des objets
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
