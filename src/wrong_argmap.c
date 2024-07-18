@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 22:46:15 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/05 00:03:51 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/16 20:56:36 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ void	check_player(t_data *dta)
 		{
 			if (dta->new_m[i][j] == 'N' || dta->new_m[i][j] == 'S'
 				|| dta->new_m[i][j] == 'E' || dta->new_m[i][j] == 'W')
-				dta->player++;
+				{
+					dta->player++;
+					dta->p_posx = j;
+					dta->p_posy = i;
+				}
 			j++;
 		}
 		i++;

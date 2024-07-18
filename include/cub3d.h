@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:01:33 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/09 14:19:00 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/18 03:42:39 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <limits.h>
 # include <fcntl.h>
 # include <time.h>
-# include <math.h>
+# include "math.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include "../minilibx-linux/mlx.h"
@@ -35,15 +35,60 @@
 //#define WIDTH 256
 //#define HEIGHT 256
 
+# define FOV 90
+# define HEIGTH 480
+# define WIDTH 640
+#define screenWidth 640
+#define screenHeight 480
+#define texWidth 64
+#define texHeight 64
 
-typedef struct s_img {
+// typedef struct  s_img {
+//     void        *img_ptr;
+//     int         *data;
+//     int         bpp;
+//     int         size_l;
+//     int         endian;
+// }               t_img;
+
+// typedef struct  s_mlx {
+//     void        *mlx_ptr;
+//     void        *win_ptr;
+//     t_img       img;
+// }               t_mlx;
+
+
+typedef struct s_img
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_img;
+}t_img;
 
+typedef struct s_posv
+{
+	int	x;
+	int	y;
+}t_posv;
+
+typedef struct s_posd
+{
+	double	x;
+	double	y;
+}t_posd;
+
+typedef struct s_plyr
+{
+	t_posv	case_pos;
+	t_posd	pos;
+	t_posd	plane;
+	int		fov;
+	double	dir;
+	t_posd	rotation;
+	int		speed;
+}t_plyr;
 
 typedef struct s_data
 {
@@ -59,13 +104,20 @@ typedef struct s_data
 	int 	start;
 	int		player;
 
+	double	p_posx;
+	double 	p_posy;
 	int		longeur;
 	int		largeur;
 	void	*mlx;
 	void	*mlx_win;
 	int		img_width;
 	int		img_height;
+	t_plyr	*plyr;
 }	t_data;
+
+
+// test mlx
+int mainaux(t_data *dta);
 
 
 //exit.prg

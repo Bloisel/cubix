@@ -6,7 +6,7 @@
 /*   By: bloisel <bloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 09:40:56 by bloisel           #+#    #+#             */
-/*   Updated: 2024/07/05 08:00:47 by bloisel          ###   ########.fr       */
+/*   Updated: 2024/07/18 03:44:29 by bloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int main(int argc, char **argv)
 		check_argmap(&dta); // search pas de wrong char in map genre 4 
 		check_player(&dta); // verifier pas de doublons player 
 	}
+	//mainaux(&dta);
 	init_window(&dta);
 	// free(dta.new_m);
 	// free(dta.map2);
